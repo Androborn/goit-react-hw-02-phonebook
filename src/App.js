@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import { ContactForm, Filter, ContactList } from "./components";
 import { handleInputChange } from "./utils";
 
-import { Wrapper } from "./App.styled";
+import { Wrapper, PageHeader, SectionHeader } from "./App.styled";
 
 export default class App extends Component {
   state = {
@@ -57,9 +57,9 @@ export default class App extends Component {
 
     return (
       <Wrapper>
-        <h1>Phonebook</h1>
+        <PageHeader>Phonebook</PageHeader>
         <ContactForm onSubmit={this.addContact} />
-        <h2>Contacts</h2>
+        <SectionHeader>Contacts</SectionHeader>
         <Filter
           value={this.state.filter}
           onChange={this.handleFilterInputChange}

@@ -3,6 +3,14 @@ import { nanoid } from "nanoid";
 import PropTypes from "prop-types";
 
 import { handleInputChange } from "../../utils";
+import {
+  ContactAddForm,
+  NameLabel,
+  NameInput,
+  NumberLabel,
+  NamberInput,
+  SubmitBtn,
+} from "./ContactForm.styled";
 
 export class ContactForm extends Component {
   state = { name: "", number: "" };
@@ -31,9 +39,9 @@ export class ContactForm extends Component {
     const { name, number } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor={this.#nameInputId}>Name</label>
-        <input
+      <ContactAddForm onSubmit={this.handleSubmit}>
+        <NameLabel htmlFor={this.#nameInputId}>Name</NameLabel>
+        <NameInput
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -43,8 +51,8 @@ export class ContactForm extends Component {
           onChange={this.handleSubmitInputChange}
           id={this.#nameInputId}
         />
-        <label htmlFor={this.#numberInputId}>Number</label>
-        <input
+        <NumberLabel htmlFor={this.#numberInputId}>Number</NumberLabel>
+        <NamberInput
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -54,8 +62,8 @@ export class ContactForm extends Component {
           onChange={this.handleSubmitInputChange}
           id={this.#numberInputId}
         />
-        <button type={"submit"}>Add contact</button>
-      </form>
+        <SubmitBtn type={"submit"}>Add contact</SubmitBtn>
+      </ContactAddForm>
     );
   }
 }
