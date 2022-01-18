@@ -1,10 +1,10 @@
 import { Component } from "react";
 import { nanoid } from "nanoid";
 
-import { ContactForm, Filter, ContactList } from "./components";
+import { Section, ContactForm, Filter, ContactList } from "./components";
 import { handleInputChange } from "./utils";
 
-import { Wrapper, PageHeader, SectionHeader } from "./App.styled";
+import { Wrapper, PageHeader } from "./App.styled";
 
 export default class App extends Component {
   state = {
@@ -19,15 +19,16 @@ export default class App extends Component {
 
   handleFilterInputChange = handleInputChange.bind(this);
 
-  addContact = (name, number) => {
+  addContact = (newName, newNumber) => {
     const newContact = {
       id: nanoid(),
-      name: name,
-      number: number,
+      name: newName,
+      number: newNumber,
     };
+    const { name } = newContact;
 
-    this.checkDuplicatedContacts(newContact.name)
-      ? alert(`${newContact.name} is already in contacts`)
+    this.checkDuplicatedContacts(name)
+      ? alert(`${name} is already in contacts`)
       : this.setState((prevState) => ({
           contacts: [...prevState.contacts, newContact],
         }));
@@ -53,23 +54,27 @@ export default class App extends Component {
     );
 
   render() {
-    const filteredContacts = this.filterContacts();
+    const { filter } = this.state;
+    const {
+      addContact,
+      handleFilterInputChange,
+      filterContacts,
+      deleteContact,
+    } = this;
 
     return (
       <Wrapper>
         <PageHeader>Phonebook</PageHeader>
-        <ContactForm onSubmit={this.addContact} />
-        <SectionHeader>Contacts</SectionHeader>
-        <Filter
-          value={this.state.filter}
-          onChange={this.handleFilterInputChange}
-        >
-          Find contacts by name
-        </Filter>
-        <ContactList
-          contacts={filteredContacts}
-          deleteContact={this.deleteContact}
-        />
+        <ContactForm onSubmit={addContact} />
+        <Section header={"Contacts"}>
+          <Filter value={filter} onChange={handleFilterInputChange}>
+            Find contacts by name
+          </Filter>
+          <ContactList
+            contacts={filterContacts()}
+            deleteContact={deleteContact}
+          />
+        </Section>
       </Wrapper>
     );
   }

@@ -15,8 +15,8 @@ import {
 export class ContactForm extends Component {
   state = { name: "", number: "" };
 
-  #nameInputId = nanoid();
-  #numberInputId = nanoid();
+  _nameInputId = nanoid();
+  _numberInputId = nanoid();
 
   handleSubmitInputChange = handleInputChange.bind(this);
 
@@ -37,10 +37,16 @@ export class ContactForm extends Component {
 
   render() {
     const { name, number } = this.state;
+    const {
+      _nameInputId,
+      _numberInputId,
+      handleSubmit,
+      handleSubmitInputChange,
+    } = this;
 
     return (
-      <ContactAddForm onSubmit={this.handleSubmit}>
-        <NameLabel htmlFor={this.#nameInputId}>Name</NameLabel>
+      <ContactAddForm onSubmit={handleSubmit}>
+        <NameLabel htmlFor={_nameInputId}>Name</NameLabel>
         <NameInput
           type="text"
           name="name"
@@ -48,10 +54,10 @@ export class ContactForm extends Component {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
           value={name}
-          onChange={this.handleSubmitInputChange}
-          id={this.#nameInputId}
+          onChange={handleSubmitInputChange}
+          id={_nameInputId}
         />
-        <NumberLabel htmlFor={this.#numberInputId}>Number</NumberLabel>
+        <NumberLabel htmlFor={_numberInputId}>Number</NumberLabel>
         <NamberInput
           type="tel"
           name="number"
@@ -59,8 +65,8 @@ export class ContactForm extends Component {
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           value={number}
-          onChange={this.handleSubmitInputChange}
-          id={this.#numberInputId}
+          onChange={handleSubmitInputChange}
+          id={_numberInputId}
         />
         <SubmitBtn type={"submit"}>Add contact</SubmitBtn>
       </ContactAddForm>

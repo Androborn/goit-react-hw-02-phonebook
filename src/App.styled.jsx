@@ -21,8 +21,3 @@ export const PageHeader = styled.h1`
     font-size: 3rem;
   }
 `;
-
-export const SectionHeader = styled.h2`
-  margin-bottom: 0.5rem;
-  font-size: 3rem;
-`;
