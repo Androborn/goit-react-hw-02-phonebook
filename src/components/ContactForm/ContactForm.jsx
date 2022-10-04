@@ -1,8 +1,6 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
-
-import { handleInputChange } from '../../utils';
 import {
   ContactAddForm,
   NameLabel,
@@ -13,15 +11,16 @@ import {
 } from './ContactForm.styled';
 
 export class ContactForm extends Component {
-  constructor() {
-    super();
-    this.handleSubmitInputChange = handleInputChange.bind(this);
-  }
-
   state = { name: '', number: '' };
 
   _nameInputId = nanoid();
   _numberInputId = nanoid();
+
+  handleInputChange = ({ target: { name, value } }) => {
+    this.setState({
+      [name]: value,
+    });
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -45,7 +44,7 @@ export class ContactForm extends Component {
       _nameInputId,
       _numberInputId,
       handleSubmit,
-      handleSubmitInputChange,
+      handleInputChange,
     } = this;
     const { name, number } = state;
 
@@ -59,7 +58,7 @@ export class ContactForm extends Component {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
           value={name}
-          onChange={handleSubmitInputChange}
+          onChange={handleInputChange}
           id={_nameInputId}
         />
         <NumberLabel htmlFor={_numberInputId}>Number</NumberLabel>
@@ -70,7 +69,7 @@ export class ContactForm extends Component {
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           value={number}
-          onChange={handleSubmitInputChange}
+          onChange={handleInputChange}
           id={_numberInputId}
         />
         <SubmitBtn type={'submit'}>Add contact</SubmitBtn>

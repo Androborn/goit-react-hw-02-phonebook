@@ -1,17 +1,9 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
-
 import { ContactForm, Filter, ContactList } from './components';
-import { handleInputChange } from './utils';
-
 import { Wrapper, PageHeader, SectionHeader } from './App.styled';
 
 export default class App extends Component {
-  constructor() {
-    super();
-    this.handleFilterInputChange = handleInputChange.bind(this);
-  }
-
   state = {
     contacts: [
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -22,8 +14,11 @@ export default class App extends Component {
     filter: '',
   };
 
-  // is it fine binding util context this way, or constructor (above) is still better?
-  // handleFilterInputChange = handleInputChange.bind(this);
+  handleInputChange = ({ target: { name, value } }) => {
+    this.setState({
+      [name]: value,
+    });
+  };
 
   addContact = (newName, newNumber) => {
     const newContact = {
@@ -63,7 +58,7 @@ export default class App extends Component {
     const {
       state,
       addContact,
-      handleFilterInputChange,
+      handleInputChange,
       filterContacts,
       deleteContact,
     } = this;
@@ -73,7 +68,7 @@ export default class App extends Component {
         <PageHeader>Phonebook</PageHeader>
         <ContactForm onSubmit={addContact} />
         <SectionHeader>Contacts</SectionHeader>
-        <Filter value={state.filter} onChange={handleFilterInputChange} />
+        <Filter value={state.filter} onChange={handleInputChange} />
         <ContactList
           contacts={filterContacts()}
           deleteContact={deleteContact}

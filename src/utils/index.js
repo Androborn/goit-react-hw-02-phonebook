@@ -1,1 +1,0 @@
-export { handleInputChange } from "./handleInputChange";
